@@ -64,9 +64,10 @@ router.put('/:id', (req, res, next) => {
     tweet.text = text;
     res.status(200).json(tweet);
   } else {
-    res.statud(404).json({ message: `Tweet id(${id}) not found` });
+    res.status(404).json({ message: `Tweet id(${id}) not found` });
   }
 });
+
 // DELETE /tweets/:id
 router.delete('/:id', (req, res, next) => {
   const id = req.params.id;
