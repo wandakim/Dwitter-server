@@ -1,45 +1,56 @@
 // 데이터를 읽고 쓰는 리파티지토리
-
+import * as userRepository from './auth.js';
 let tweets = [
   {
     id: '1',
     text: 'I am Maker!',
-    createdAt: Date.now().toString(),
-    name: 'Bob',
-    username: 'bob',
-    url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
+    createdAt: new Date().toString(),
+    userId: '1', //?...??????????
   },
   {
     id: '2',
     text: 'Me either Maker!',
-    createdAt: Date.now().toString(),
-    name: 'Ellie',
-    username: 'ellie',
+    createdAt: new Date().toString(),
+    userId: '1',
   },
 ];
 
 export async function getAll() {
-  return tweets;
+  return Promise.all(
+    //
+    tweets.map(async (tweet) => {
+      const { username, name, url } = await userRepository.findById(
+        tweet.userId
+      );
+      return { ...tweet, username, name, url };
+    })
+  );
 }
 
 export async function getAllByUsername(username) {
-  return tweets.filter((tweet) => tweet.username === username);
+  return getAll().then((tweets) =>
+    tweets.filter((tweet) => tweet.username === username)
+  );
 }
 
-export async function getAllById(id) {
-  return tweets.find((tweet) => tweet.id === id);
+export async function getById(id) {
+  const found = tweets.find((tweet) => tweet.id === id);
+  if (!found) {
+    return null;
+  }
+  const { username, name, url } = userRepository.findById(found.userId);
+  return { ...found, username, name, url };
 }
 
-export async function create(text, name, username) {
+export async function create(text, userId) {
   const tweet = {
     id: Date.now().toString(),
     text,
     createdAt: new Date(),
-    name,
-    username,
+    userId,
   };
   tweets = [tweet, ...tweets];
-  return tweet;
+  return getById(tweet.id);
 }
 
 export async function update(id, text) {
@@ -47,7 +58,7 @@ export async function update(id, text) {
   if (tweet) {
     tweet.text = text;
   }
-  return tweet;
+  return getById(tweet.id);
 }
 
 export async function remove(id) {

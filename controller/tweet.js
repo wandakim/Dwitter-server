@@ -10,7 +10,7 @@ export async function getTweets(req, res) {
 
 export async function getTweet(req, res) {
   const id = req.params.id;
-  const tweet = await tweetRepository.getAllById(id);
+  const tweet = await tweetRepository.getById(id);
   tweet
     ? res.status(200).json(tweet)
     : res.status(404).json({ message: `Tweet id(${id}) not found` });
@@ -18,7 +18,7 @@ export async function getTweet(req, res) {
 
 export async function createTweet(req, res) {
   const { text, name, username } = req.body;
-  const tweet = await tweetRepository.create(text, name, username);
+  const tweet = await tweetRepository.create(text, req.userId);
   res.status(201).json(tweet);
 }
 

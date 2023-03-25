@@ -22,7 +22,7 @@ export async function signUp(req, res) {
     email,
     url,
   });
-  const token = createJwtToken(userId);
+  const token = createJwtToken(userId); // 고유한 id로 토큰을 생성.
   res.status(201).json({ token, username });
 
   res.status();
@@ -39,11 +39,19 @@ export async function login(req, res) {
     return res.status(401).json({ message: 'Invalid user or password' });
   }
   const token = createJwtToken(user.id);
-  res.status(200).json({ token, username });
+  res.status(200).json({ token, username }); // ? username은 왜 같이 보내주는지?
 }
 
 function createJwtToken(id) {
   return jwt.sign({ id }, jwtSecretKey, { expiresIn: jwtExpriresInDays });
+}
+
+export async function me(req, res, next) {
+  const user = await userRepository.findById(req.userId);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+  res.status(200).json({ token: req.token, username: user.username });
 }
 
 // 토큰은 내가 가지고 있는 것이 아니다. 서버에는 시크릿키만 가지고 있는것.

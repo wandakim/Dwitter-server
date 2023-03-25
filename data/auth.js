@@ -1,4 +1,3 @@
-// abcd1234: ~~
 let users = [
   {
     id: '1',
@@ -14,8 +13,12 @@ export async function findByUsername(username) {
   return users.find((user) => user.username === username);
 }
 
+export async function findById(id) {
+  return users.find((user) => user.id === id);
+}
+
 export async function createUser(user) {
-  const created = { ...user, id: Date.now().toString() };
+  const created = { ...user, id: Date.now().toString() }; //고유한 id를 만든다.
   users.push(created);
   return created.id;
 }
