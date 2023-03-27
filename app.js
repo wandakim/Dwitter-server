@@ -5,6 +5,10 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+console.log(process.env);
 
 const app = express();
 
