@@ -7,6 +7,13 @@ let users = [
     username: 'bob',
     url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80',
   },
+  {
+    id: '2',
+    username: 'ellie',
+    password: '$2b$10$dM3bFf1mqx2peDdu4Nmu8ux0TJ2RPKqe1jya2CDLF4Xth45lxV.vi',
+    name: 'Ellie',
+    email: 'ellie@gmail.com',
+  },
 ];
 
 export async function findByUsername(username) {

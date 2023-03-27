@@ -6,7 +6,7 @@ import helmet from 'helmet';
 import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
-import { Server } from 'socket.io';
+import { initSocket } from './connection/socket.js';
 
 const app = express();
 
@@ -29,14 +29,4 @@ app.use((error, req, res, next) => {
 });
 
 const server = app.listen(config.host.port);
-const socketIO = new Server(server, {
-  cors: {
-    origin: '*',
-  },
-});
-
-socketIO.on('connection', (socket) => {
-  console.log('Client !!!!!'); // 소켓 사용해보기
-  socketIO.emit('dwitter', 'Hello');
-  socketIO.emit('dwitter', 'Hello');
-});
+initSocket(server);
