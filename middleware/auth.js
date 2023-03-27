@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import * as userRepository from '../data/auth.js';
+import { config } from '../config.js';
 
 const AUTH_ERROR = { message: 'Authentication Error' };
 
@@ -19,21 +20,17 @@ export const isAuth = async (req, res, next) => {
   const token = authHeader.split(' ')[1];
   //Todo: Make it secure!
 
-  jwt.verify(
-    token,
-    'F2dN7x8Halksdlfkasijdflkwjealksjdfiwez', // 일단 시크릿키
-    async (error, decoded) => {
-      if (error) {
-        return res.status(401).json(AUTH_ERROR);
-      }
-      const user = await userRepository.findById(decoded.id);
-      if (!user) {
-        return res.status(401).json(AUTH_ERROR);
-        // jwt자체로 유효성을 판단하는 장점을 극대화 하기 위해controller에서만 해주어도 무방하다.
-      }
-      req.userId = user.id; // req.customData 리퀘 자체에 userid를 추가해 주어서
-      // 다른 콜백에서도 계속 사용할 수 있도록 해주었다.
-      next();
+  jwt.verify(token, config.jwt.secretKey, async (error, decoded) => {
+    if (error) {
+      return res.status(401).json(AUTH_ERROR);
     }
-  );
+    const user = await userRepository.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json(AUTH_ERROR);
+      // jwt자체로 유효성을 판단하는 장점을 극대화 하기 위해controller에서만 해주어도 무방하다.
+    }
+    req.userId = user.id; // req.customData 리퀘 자체에 userid를 추가해 주어서
+    // 다른 콜백에서도 계속 사용할 수 있도록 해주었다.
+    next();
+  });
 };
