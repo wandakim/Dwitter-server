@@ -5,7 +5,7 @@ let tweets = [
     id: '1',
     text: 'I am Maker!',
     createdAt: new Date().toString(),
-    userId: '1', //?...??????????
+    userId: '1',
   },
   {
     id: '2',
@@ -38,7 +38,7 @@ export async function getById(id) {
   if (!found) {
     return null;
   }
-  const { username, name, url } = userRepository.findById(found.userId);
+  const { username, name, url } = await userRepository.findById(found.userId);
   return { ...found, username, name, url };
 }
 

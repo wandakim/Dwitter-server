@@ -11,7 +11,7 @@ const AUTH_ERROR = { message: 'Authentication Error' };
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication 
  */
 export const isAuth = async (req, res, next) => {
-  const authHeader = req.get('Authorization');
+  const authHeader = req.get('Authorization'); //?
   if (!(authHeader && authHeader.startsWith('Bearer '))) {
     return res.status(401).json(AUTH_ERROR);
   }
@@ -21,7 +21,7 @@ export const isAuth = async (req, res, next) => {
 
   jwt.verify(
     token,
-    'F2dN7x8Halksdlfkasijdflkwjealksjdfiwez', // 일단 시크릿키. 바꿔주기.
+    'F2dN7x8Halksdlfkasijdflkwjealksjdfiwez', // 일단 시크릿키
     async (error, decoded) => {
       if (error) {
         return res.status(401).json(AUTH_ERROR);
