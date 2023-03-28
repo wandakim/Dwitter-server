@@ -22,11 +22,12 @@ export const isAuth = async (req, res, next) => {
 
   jwt.verify(token, config.jwt.secretKey, async (error, decoded) => {
     if (error) {
-      console.log(error);
-      return res.status(401).json(AUTH_ERROR);
+      return res.status(401).json(AUTH_ERROR, error);
     }
     const user = await userRepository.findById(decoded.id);
     if (!user) {
+      console.log(decoded);
+      console.log('not user!');
       return res.status(401).json(AUTH_ERROR);
       // jwt자체로 유효성을 판단하는 장점을 극대화 하기 위해controller에서만 해주어도 무방하다.
     }
