@@ -15,11 +15,11 @@
 //     email: 'ellie@gmail.com',
 //   },
 // ];
-import { db, sequelize } from '../db/database.js';
+import { /* db, */ sequelize } from '../db/database.js';
 import SQ from 'sequelize';
 const DataTypes = SQ.DataTypes;
 
-const User = sequelize.define(
+export const User = sequelize.define(
   'user',
   {
     // 사용자 모델 정의
