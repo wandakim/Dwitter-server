@@ -1,4 +1,4 @@
-// 데이터를 읽고 쓰는 리파티지토리
+// 데이터를 읽고 쓰는 리파지토리
 // import * as userRepository from './auth.js';
 // let tweets = [
 //   {

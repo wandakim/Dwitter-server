@@ -15,31 +15,70 @@
 //     email: 'ellie@gmail.com',
 //   },
 // ];
-import { db } from '../db/database.js';
+import { db, sequelize } from '../db/database.js';
+import SQ from 'sequelize';
+const DataTypes = SQ.DataTypes;
+
+const User = sequelize.define(
+  'user',
+  {
+    // 사용자 모델 정의
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      allowNull: false,
+      primaryKey: true,
+    },
+    username: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
+    },
+    password: {
+      type: DataTypes.STRING(128),
+      allowNull: false,
+    },
+    name: {
+      type: DataTypes.STRING(128),
+      allowNull: false,
+    },
+    email: {
+      type: DataTypes.STRING(128),
+      allowNull: false,
+    },
+    url: DataTypes.TEXT,
+  },
+  {
+    timestamps: false,
+  }
+);
 
 export async function findByUsername(username) {
+  return User.findOne({ where: { username } });
   // return users.find((user) => user.username === username);
-  return db
-    .execute('SELECT * FROM users WHERE username=?', [username])
-    .then((result) => result[0][0]);
+  // return db
+  //   .execute('SELECT * FROM users WHERE username=?', [username])
+  //   .then((result) => result[0][0]);
 }
 
 export async function findById(id) {
+  return User.findByPk(id);
   // return users.find((user) => user.id === id);
-  return db
-    .execute('SELECT * FROM users WHERE id=?', [id])
-    .then((result) => result[0][0]);
+  // return db
+  //   .execute('SELECT * FROM users WHERE id=?', [id])
+  //   .then((result) => result[0][0]);
 }
 
 export async function createUser(user) {
+  return User.create(user).then((data) => data.dataValues.id);
   // const created = { ...user, id: Date.now().toString() }; //고유한 id를 만든다.
   // users.push(created);
   // return created.id;
-  const { username, password, name, email, url } = user;
-  return db
-    .execute(
-      'INSERT INTO users (username, password, name, email, url) VALUES (?,?,?,?,?)',
-      [username, password, name, email, url]
-    )
-    .then((result) => result[0].insertId);
+
+  // const { username, password, name, email, url } = user;
+  // return db
+  //   .execute(
+  //     'INSERT INTO users (username, password, name, email, url) VALUES (?,?,?,?,?)',
+  //     [username, password, name, email, url]
+  //   )
+  //   .then((result) => result[0].insertId);
 }
