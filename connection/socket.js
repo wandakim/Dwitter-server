@@ -6,14 +6,13 @@ class Socket {
   constructor(server) {
     this.io = new Server(server, {
       cors: {
-        origin: config.cors.allowedOrigin,
+        origin: '*',
       },
     });
 
     this.io.use((socket, next) => {
-      const token = socket.handshake.auth.token; //??
+      const token = socket.handshake.auth.token;
       if (!token) {
-        // 토큰 검증
         return next(new Error('Authentication error'));
       }
       jwt.verify(token, config.jwt.secretKey, (error, decoded) => {
@@ -22,6 +21,10 @@ class Socket {
         }
         next();
       });
+    });
+
+    this.io.on('connection', (socket) => {
+      console.log('Socket client connected');
     });
   }
 }
