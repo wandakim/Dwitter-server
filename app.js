@@ -7,31 +7,34 @@ import tweetsRouter from './router/tweets.js';
 import authRouter from './router/auth.js';
 import { config } from './config.js';
 import { initSocket } from './connection/socket.js';
-// import { db } from './db/database.js';
 import { sequelize } from './db/database.js';
 
 const app = express();
 
+const corsOption = {
+  origin: config.cors.allowedOrigin,
+  optionsSuccessStatus: 200,
+};
+
 app.use(express.json());
 app.use(helmet());
-app.use(cors());
-app.use(morgan('tiny')); // 사용할 미들웨어들
+app.use(cors(corsOption));
+app.use(morgan('tiny'));
 
 app.use('/tweets', tweetsRouter);
 app.use('/auth', authRouter);
 
-app.use((req, res, next) => {
-  // 처리해 줄 수 없다면 Not Found를 전달
-  res.sendStatus(404); // 404만으로도 의미가 충분
+app.use((req, res) => {
+  res.sendStatus(404);
 });
 
-app.use((error, req, res, next) => {
+app.use((error, req, res) => {
   console.error(error);
   res.sendStatus(500);
 });
 
-sequelize.sync().then((/*client*/) => {
-  // console.log(client);
-  const server = app.listen(config.host.port);
+sequelize.sync().then(() => {
+  console.log(`Server is started.... ${new Date()}`);
+  const server = app.listen(config.port);
   initSocket(server);
 });

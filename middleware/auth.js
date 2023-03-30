@@ -29,10 +29,9 @@ export const isAuth = async (req, res, next) => {
       console.log(decoded);
       console.log('not user!');
       return res.status(401).json(AUTH_ERROR);
-      // jwt자체로 유효성을 판단하는 장점을 극대화 하기 위해controller에서만 해주어도 무방하다.
     }
-    req.userId = user.id; // req.customData 리퀘 자체에 userid를 추가해 주어서
-    // 다른 콜백에서도 계속 사용할 수 있도록 해주었다.
+    req.userId = user.id;
+    req.token = token;
     next();
   });
 };
