@@ -32,3 +32,4 @@ sequelize.sync().then(() => {
   const server = app.listen(config.host.port);
   initSocket(server);
 });
+// sequal
