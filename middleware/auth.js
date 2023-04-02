@@ -12,11 +12,10 @@ const AUTH_ERROR = { message: 'Authentication Error' };
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication 
  */
 export const isAuth = async (req, res, next) => {
-  const authHeader = req.get('Authorization'); //?
+  const authHeader = req.get('Authorization');
   if (!(authHeader && authHeader.startsWith('Bearer '))) {
     return res.status(401).json(AUTH_ERROR);
   }
-
   const token = authHeader.split(' ')[1];
   //Todo: Make it secure!
 

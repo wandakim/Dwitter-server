@@ -27,6 +27,7 @@ export async function updateTweet(req, res) {
   const id = req.params.id;
   const text = req.body.text;
   const tweet = await tweetRepository.getById(id);
+  console.log('tweet', tweet);
   if (!tweet) {
     return res.sendStatus(404);
   }
@@ -34,6 +35,7 @@ export async function updateTweet(req, res) {
     return res.sendStatus(403);
   }
   const updated = await tweetRepository.update(id, text);
+  console.log(updated);
   res.status(200).json(updated);
 }
 
