@@ -11,7 +11,7 @@ export const sequelize = new SQ.Sequelize(database, user, password, {
   dialectOptions: {
     ssl: {
       require: true,
-      regectUnauthorized: false,
+      rejectUnauthorized: false,
     },
   },
 });
