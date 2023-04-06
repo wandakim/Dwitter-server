@@ -18,7 +18,7 @@ const corsOption = {
 
 app.use(express.json());
 app.use(helmet());
-app.use(cors(corsOptioin));
+app.use(cors(corsOption));
 app.use(morgan('tiny'));
 
 app.use('/tweets', tweetsRouter);
