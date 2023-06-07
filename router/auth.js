@@ -10,7 +10,7 @@ const router = express.Router();
 const validateCredential = [
   body('username')
     .trim()
-    .notEmpty()
+    .isLength({ min: 5 })
     .withMessage('username should be ad least 5 charactors'),
   body('password')
     .trim()
