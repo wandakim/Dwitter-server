@@ -30,7 +30,7 @@ export const User = sequelize.define(
     url: DataTypes.TEXT,
   },
   {
-    timestamps: false,
+    timestamps: false, // createdAt, updatedAt 컬럼을 사용X
   }
 );
 

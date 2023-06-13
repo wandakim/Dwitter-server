@@ -26,14 +26,14 @@ const validateSignup = [
   body('url')
     .isURL()
     .withMessage('invalid URL')
-    .optional({ nullable: true, checkFalsy: true }),
+    .optional({ nullable: true, checkFalsy: true }), // optional
   validate,
 ];
 
 router.post('/signup', validateSignup, authController.signUp);
-router.post('/login', validateCredential, authController.login);
 
-//사용자가 앱을 열기만 하면 실행되는 코드.
+router.post('/login', validateCredential, authController.login);
+//로그인 이후에 사용자 검증
 //사용자의 정보를 먼저 받아 와서, 사용자 정보가 있다면 사용자를 설정하고, 그렇지 않다면 로그인 페이지로 이동
 router.get('/me', isAuth, authController.me);
 

@@ -4,24 +4,19 @@ import { config } from '../config.js';
 
 const AUTH_ERROR = { message: 'Authentication Error' };
 
-/*  
-리퀘 헤더에 Authorization 있으면 value를 가져오고, 토큰의 유효성을 검사한다. 
-
-*login 과 signup 으로 받아온 토큰을 가지고 서버에 요청을 할 때는 헤더에 Authorization를 명시해 
-주어야 한다. value로는 type(option)과 credential(token)을 함께 명시해 주어야 한다. 
-https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication 
- */
 export const isAuth = async (req, res, next) => {
   const authHeader = req.get('Authorization');
   if (!(authHeader && authHeader.startsWith('Bearer '))) {
     return res.status(401).json(AUTH_ERROR);
   }
   const token = authHeader.split(' ')[1];
-  //Todo: Make it secure!
+  //Todo: Make it secure
 
   jwt.verify(token, config.jwt.secretKey, async (error, decoded) => {
     if (error) {
-      return res.status(401).json(AUTH_ERROR, error);
+      return res
+        .status(401)
+        .json({ error: AUTH_ERROR, message: error.message });
     }
     const user = await userRepository.findById(decoded.id);
     if (!user) {

@@ -13,7 +13,7 @@ const app = express();
 
 const corsOption = {
   origin: config.cors.allowedOrigin,
-  optionsSuccessStatus: 200,
+  optionsSuccessStatus: 200, // 예전 브라우저
 };
 
 app.use(express.json());
@@ -38,4 +38,3 @@ sequelize.sync().then(() => {
   const server = app.listen(config.port);
   initSocket(server);
 });
-// sequal
