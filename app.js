@@ -13,7 +13,7 @@ const app = express();
 
 const corsOption = {
   origin: config.cors.allowedOrigin,
-  optionsSuccessStatus: 200, // 예전 브라우저
+  optionsSuccessStatus: 200,
 };
 
 app.use(express.json());

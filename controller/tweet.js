@@ -20,7 +20,7 @@ export async function createTweet(req, res) {
   const { text, name, username } = req.body;
   const tweet = await tweetRepository.create(text, req.userId);
   res.status(201).json(tweet);
-  getSocketIO().emit('tweets', tweet);
+  getSocketIO().emit('tweets', { command: 'create', tweet });
 }
 
 export async function updateTweet(req, res) {
@@ -35,6 +35,7 @@ export async function updateTweet(req, res) {
   }
   const updated = await tweetRepository.update(id, text);
   res.status(200).json(updated);
+  getSocketIO().emit('tweets', { command: 'update', updated });
 }
 
 export async function deleteTweet(req, res) {
@@ -48,4 +49,5 @@ export async function deleteTweet(req, res) {
   }
   await tweetRepository.remove(id);
   res.sendStatus(204);
+  getSocketIO().emit('tweets', { command: 'delete', id });
 }
