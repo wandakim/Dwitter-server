@@ -18,10 +18,9 @@ export async function signUp(req, res) {
     email,
     url,
   });
-  const token = createJwtToken(userId); // 고유한 id로 토큰을 생성.
+  const token = createJwtToken(userId);
+  setToken(res, token);
   res.status(201).json({ token, username });
-
-  res.status();
 }
 
 export async function login(req, res) {
@@ -35,13 +34,30 @@ export async function login(req, res) {
     return res.status(401).json({ message: 'Invalid user or password' });
   }
   const token = createJwtToken(user.id);
+  setToken(res, token);
   res.status(200).json({ token, username });
+}
+
+export async function logout(req, res, next) {
+  setToken(res, '');
+  res.status(200).json({ message: 'User had been logged out' });
 }
 
 function createJwtToken(id) {
   return jwt.sign({ id }, config.jwt.secretKey, {
     expiresIn: config.jwt.expiresInSec,
   });
+}
+
+function setToken(res, token) {
+  // cookie
+  const options = {
+    maxAge: config.jwt.expiresInSec * 1000,
+    httpOnly: true,
+    sameSite: 'none',
+    secure: true,
+  };
+  res.cookie('token', token, options); // HTTP-ONLY
 }
 
 export async function me(req, res, next) {
