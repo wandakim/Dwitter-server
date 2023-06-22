@@ -39,8 +39,9 @@ export async function login(req, res) {
 }
 
 export async function logout(req, res, next) {
-  setToken(res, '');
-  res.status(200).json({ message: 'User had been logged out' });
+  const token = '';
+  setToken(res, token);
+  res.status(200).json({ token, message: 'User had been logged out' });
 }
 
 function createJwtToken(id) {
@@ -66,4 +67,13 @@ export async function me(req, res, next) {
     return res.status(404).json({ message: 'User not found' });
   }
   res.status(200).json({ token: req.token, username: user.username });
+}
+
+export async function csrfToken(req, res, next) {
+  const csrfToken = await geterateCSRFToken();
+  res.status(200).json({ csrfToken });
+}
+
+async function geterateCSRFToken() {
+  return bcrypt.hash(config.csrf.plainToken, 1);
 }
