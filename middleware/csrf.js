@@ -10,7 +10,7 @@ export const csrfCheck = (req, res, next) => {
     return next();
   }
 
-  const csrfHeader = req.get('_csrf-token');
+  const csrfHeader = req.get('dwitter-csrf-token');
 
   if (!csrfHeader) {
     console.warn('Missing CSRF Token', req.headers.origin);
