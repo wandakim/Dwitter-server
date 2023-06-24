@@ -25,7 +25,7 @@ app.use(cookieParser());
 app.use(helmet());
 app.use(cors(corsOption));
 app.use(morgan('tiny'));
-app.use(rateLimite);
+// app.use(rateLimite);
 
 app.use(csrfCheck);
 app.use('/tweets', tweetsRouter);
