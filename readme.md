@@ -1,9 +1,12 @@
 # Dwitter
 
+<img width="1125" alt="image" src="https://github.com/wandakim/Dwitter-Client/assets/74309458/9632acc4-3ad4-4850-a323-e8713c5958b8">
+
 <br/>
- 
-## 서비스 소개 
-- 실시간 채팅이 가능한 웹 어플리케이션입니다. 
+
+## 서비스 소개
+
+- 실시간 채팅이 가능한 웹 어플리케이션입니다.
 - [배포 링크](https://beautiful-hummingbird-0ed56a.netlify.app)
 - [Client Repository](https://github.com/wandakim/Dwitter-Client)
 
@@ -20,14 +23,9 @@
 
 <br />
 
-## API Spec
-
-<br />
-
 ## Built With
 
-- Backend
-  </div> 
+  <div>
     <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white">
     <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white">
     <img src="https://img.shields.io/badge/heroku-430098?style=for-the-badge&logo=netlify&logoColor=white">
@@ -40,7 +38,7 @@
       <img src="https://img.shields.io/badge/reactrouter-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white">
       <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white">
       <img src="https://img.shields.io/badge/netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white">
-    <div>
+  </div>
 
 <br />
 
